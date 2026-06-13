@@ -1,0 +1,1429 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PRO TOUR — Авторские туры в Дагестан</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    :root {
+      --navy:      #0c2d48;
+      --blue:      #0d9cde;
+      --brown:     #a47658;
+      --brown-lt:  #c9956e;
+      --brown-xlt: #d4a87a;
+      --slate:     #606971;
+      --olive:     #4b5143;
+      --cream:     #f5ede3;
+      --cream-d:   #ece3d6;
+      --white:     #ffffff;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--navy);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url('background.jpg');
+      background-size: cover;
+      background-position: center 20%;
+      z-index: -1;
+    }
+
+    a { text-decoration: none; }
+
+    /* ── BUTTONS */
+    .btn {
+      display: inline-block;
+      padding: 1rem 2.3rem;
+      border-radius: 50px;
+      font-size: .94rem;
+      font-weight: 500;
+      letter-spacing: .02em;
+      transition: all .26s;
+      cursor: pointer;
+      border: none;
+    }
+    .btn-gold {
+      background: linear-gradient(135deg, var(--brown) 0%, var(--brown-xlt) 100%);
+      color: #fff;
+      box-shadow: 0 8px 32px rgba(164,118,88,.40);
+    }
+    .btn-gold:hover { transform: translateY(-3px); box-shadow: 0 16px 44px rgba(164,118,88,.52); }
+
+    .btn-ghost {
+      border: 1.5px solid rgba(255,255,255,.35);
+      color: rgba(255,255,255,.88);
+      background: rgba(255,255,255,.08);
+      backdrop-filter: blur(8px);
+    }
+    .btn-ghost:hover { background: rgba(255,255,255,.16); border-color: rgba(255,255,255,.6); color: #fff; }
+
+    .btn-wa {
+      background: #25D366;
+      color: #fff;
+      box-shadow: 0 8px 28px rgba(37,211,102,.30);
+      display: inline-flex; align-items: center; gap: .55rem;
+    }
+    .btn-wa:hover { transform: translateY(-3px); box-shadow: 0 14px 38px rgba(37,211,102,.45); }
+
+    .btn-tg {
+      background: #229ED9;
+      color: #fff;
+      box-shadow: 0 8px 28px rgba(34,158,217,.35);
+      display: inline-flex; align-items: center; gap: .55rem;
+    }
+    .btn-tg:hover { transform: translateY(-3px); box-shadow: 0 14px 38px rgba(34,158,217,.48); }
+
+    /* ── HERO */
+    .hero {
+      min-height: 100vh;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 5rem 1.5rem 10rem;
+      overflow: hidden;
+    }
+
+    /* минимальный оверлей — только чтобы текст читался */
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(175deg,
+        rgba(0,0,0,.08) 0%,
+        rgba(0,0,0,.04) 45%,
+        rgba(0,0,0,.20) 100%);
+      z-index: 1;
+    }
+
+    .hero-fade {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 160px;
+      background: linear-gradient(to bottom, transparent, rgba(4,10,20,.55));
+      z-index: 2;
+    }
+
+    .hero-nav {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      padding: 2.2rem 2.5rem;
+      display: flex;
+      justify-content: center;
+      z-index: 10;
+    }
+
+    .logo-text {
+      font-size: .65rem;
+      font-weight: 600;
+      letter-spacing: .6em;
+      color: #fff;
+      text-transform: uppercase;
+      text-shadow: 0 1px 10px rgba(0,0,0,.6);
+    }
+
+    .hero-body {
+      position: relative;
+      z-index: 5;
+      max-width: 740px;
+    }
+
+    .hero-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      background: rgba(164,118,88,.22);
+      border: 1px solid rgba(212,168,122,.4);
+      color: var(--brown-xlt);
+      font-size: .68rem;
+      font-weight: 600;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      padding: .44rem 1.1rem;
+      border-radius: 2rem;
+      margin-bottom: 1.9rem;
+      backdrop-filter: blur(6px);
+    }
+
+    .pill-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--brown-xlt);
+      animation: blink 2.2s ease-in-out infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: .4; transform: scale(.65); }
+    }
+
+    .hero-h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.7rem, 8.5vw, 5.4rem);
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.06;
+      letter-spacing: -.018em;
+      margin-bottom: 1.5rem;
+      text-shadow: 0 2px 28px rgba(0,0,0,.75), 0 1px 6px rgba(0,0,0,.5);
+    }
+
+    .hero-h1 em { font-style: italic; color: var(--brown-xlt); }
+
+    .hero-sub {
+      font-size: clamp(.94rem, 2.1vw, 1.1rem);
+      color: rgba(255,255,255,.92);
+      font-weight: 400;
+      line-height: 1.9;
+      max-width: 510px;
+      margin: 0 auto 2.8rem;
+      text-shadow: 0 1px 14px rgba(0,0,0,.70);
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .hero-stats {
+      position: absolute;
+      bottom: 4.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 5;
+      display: flex;
+      align-items: center;
+      gap: 0;
+      white-space: nowrap;
+    }
+
+    .hstat {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0 2rem;
+    }
+
+    .hstat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.55rem;
+      font-weight: 700;
+      color: var(--brown-xlt);
+      line-height: 1;
+      margin-bottom: .18rem;
+      text-shadow: 0 1px 10px rgba(0,0,0,.55);
+    }
+
+    .hstat-label {
+      font-size: .6rem;
+      color: rgba(255,255,255,.75);
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      text-shadow: 0 1px 8px rgba(0,0,0,.55);
+    }
+
+    .hstat-sep { width: 1px; height: 34px; background: rgba(255,255,255,.3); }
+
+    .hero-scroll-cue {
+      position: absolute;
+      bottom: 1.6rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 5;
+      width: 1px; height: 36px;
+      background: linear-gradient(to bottom, rgba(255,255,255,.55), transparent);
+      animation: drop 1.9s ease-in-out infinite;
+    }
+
+    @keyframes drop {
+      0%   { opacity: 1; transform: translateX(-50%) scaleY(1) translateY(0); }
+      100% { opacity: 0; transform: translateX(-50%) scaleY(.4) translateY(10px); }
+    }
+
+    /* ── SHARED */
+    .section { padding: 7rem 1.5rem; }
+    .container { max-width: 1080px; margin: 0 auto; }
+
+    .eyebrow {
+      font-size: .67rem;
+      font-weight: 600;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      color: var(--brown);
+      margin-bottom: .8rem;
+    }
+
+    .h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.9rem, 4.5vw, 3rem);
+      font-weight: 700;
+      line-height: 1.14;
+      color: var(--navy);
+    }
+
+    /* ── ABOUT */
+    .about { background: rgba(255,255,255,.88); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    .about-card {
+      background: linear-gradient(148deg, var(--navy) 0%, #0f3d62 100%);
+      border-radius: 28px;
+      padding: 3.2rem 2.8rem;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .about-card::before {
+      content: '';
+      position: absolute;
+      top: -70px; right: -70px;
+      width: 260px; height: 260px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(164,118,88,.18), transparent 65%);
+      pointer-events: none;
+    }
+
+    .about-card::after {
+      content: '';
+      position: absolute;
+      bottom: -50px; left: -50px;
+      width: 200px; height: 200px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(13,156,222,.08), transparent 65%);
+      pointer-events: none;
+    }
+
+    .ac-inner { position: relative; z-index: 1; }
+
+    .ac-tag {
+      font-size: .6rem;
+      letter-spacing: .26em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.3);
+      margin-bottom: 1.4rem;
+    }
+
+    .ac-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.75rem;
+      font-weight: 700;
+      line-height: 1.18;
+      margin-bottom: .3rem;
+    }
+
+    .ac-sub {
+      font-size: .82rem;
+      color: rgba(255,255,255,.38);
+      margin-bottom: 2.2rem;
+    }
+
+    .ac-rule { height: 1px; background: rgba(255,255,255,.1); margin-bottom: 2.2rem; }
+
+    .ac-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: .6rem;
+      text-align: center;
+    }
+
+    .ac-stat-n {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--brown-xlt);
+      line-height: 1;
+      margin-bottom: .22rem;
+    }
+
+    .ac-stat-l {
+      font-size: .62rem;
+      color: rgba(255,255,255,.36);
+      letter-spacing: .04em;
+      line-height: 1.38;
+    }
+
+    .ac-badge {
+      margin-top: 2.2rem;
+      display: inline-flex;
+      align-items: center;
+      gap: .6rem;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 50px;
+      padding: .55rem 1.15rem;
+      font-size: .7rem;
+      color: rgba(255,255,255,.5);
+    }
+
+    .green-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: #52c28a;
+      box-shadow: 0 0 7px rgba(82,194,138,.55);
+      flex-shrink: 0;
+    }
+
+    .about-text .eyebrow { margin-bottom: .9rem; }
+    .about-text .h2      { margin-bottom: 1.6rem; }
+
+    .about-text p {
+      font-size: 1.02rem;
+      color: var(--slate);
+      line-height: 1.92;
+      margin-bottom: 1rem;
+    }
+
+    .about-text strong { color: var(--navy); font-weight: 600; }
+
+    .tags-row { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 2rem; }
+
+    .tag {
+      background: var(--cream);
+      color: var(--navy);
+      font-size: .74rem;
+      font-weight: 500;
+      padding: .38rem .9rem;
+      border-radius: 50px;
+      border: 1px solid rgba(164,118,88,.2);
+      transition: background .2s, border-color .2s;
+    }
+
+    .tag:hover { background: var(--cream-d); border-color: rgba(164,118,88,.4); }
+
+    /* ── TOUR PROGRAM */
+    .program { background: rgba(245,237,227,.92); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); }
+    .program .h2 { margin-bottom: 3.5rem; }
+
+    .day-list { display: flex; flex-direction: column; gap: .8rem; }
+
+    .day-item {
+      background: rgba(255,255,255,.78);
+      border: 1px solid rgba(164,118,88,.15);
+      border-radius: 18px;
+      overflow: hidden;
+      transition: border-color .25s, box-shadow .25s;
+    }
+
+    .day-item.open {
+      border-color: rgba(164,118,88,.38);
+      box-shadow: 0 4px 24px rgba(164,118,88,.10);
+    }
+
+    .day-header {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 1.4rem;
+      padding: 1.5rem 2rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-align: left;
+    }
+
+    .day-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--brown-xlt);
+      opacity: .5;
+      flex-shrink: 0;
+      line-height: 1;
+      min-width: 2.5rem;
+      transition: opacity .25s;
+    }
+
+    .day-item.open .day-num { opacity: 1; }
+
+    .day-label { flex: 1; }
+
+    .day-label h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.18rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: .22rem;
+    }
+
+    .day-label p { font-size: .82rem; color: var(--slate); }
+
+    .day-arrow { flex-shrink: 0; transition: transform .3s; color: var(--brown); }
+    .day-item.open .day-arrow { transform: rotate(180deg); }
+
+    .day-body { max-height: 0; overflow: hidden; transition: max-height .45s ease; }
+
+    .day-body-inner { padding: 0 2rem 2rem 5.8rem; }
+
+    .day-points { list-style: none; display: flex; flex-direction: column; gap: .65rem; }
+
+    .day-points li {
+      display: flex;
+      align-items: flex-start;
+      gap: .75rem;
+      font-size: .95rem;
+      color: var(--slate);
+      line-height: 1.6;
+    }
+
+    .day-points li::before {
+      content: '';
+      flex-shrink: 0;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--brown-xlt);
+      margin-top: .52rem;
+    }
+
+    .day-tip {
+      margin-top: 1.2rem;
+      padding: .8rem 1.15rem;
+      background: rgba(164,118,88,.07);
+      border-left: 3px solid var(--brown-xlt);
+      border-radius: 0 10px 10px 0;
+      font-size: .83rem;
+      color: var(--brown);
+    }
+
+    /* ── INCLUDES */
+    .includes { background: rgba(255,255,255,.88); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); }
+
+    .includes-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-top: 3.5rem;
+    }
+
+    .inc-card { border-radius: 22px; padding: 2.4rem 2.2rem; }
+
+    .inc-card.yes {
+      background: rgba(82,194,138,.06);
+      border: 1px solid rgba(82,194,138,.22);
+    }
+
+    .inc-card.no {
+      background: rgba(100,100,100,.04);
+      border: 1px solid rgba(100,100,100,.12);
+    }
+
+    .inc-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.12rem;
+      font-weight: 700;
+      margin-bottom: 1.4rem;
+    }
+
+    .inc-card.yes .inc-title { color: #2e8b5b; }
+    .inc-card.no  .inc-title { color: var(--slate); }
+
+    .inc-list { list-style: none; display: flex; flex-direction: column; gap: .85rem; }
+
+    .inc-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: .8rem;
+      font-size: .93rem;
+      color: var(--navy);
+      line-height: 1.5;
+    }
+
+    .inc-icon {
+      flex-shrink: 0;
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: .08rem;
+    }
+
+    .inc-icon.yes { background: rgba(82,194,138,.18); }
+    .inc-icon.no  { background: rgba(100,100,100,.10); }
+
+    /* ── BENEFITS */
+    .benefits {
+      background: rgba(12,45,72,.90);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .benefits::before {
+      content: '';
+      position: absolute;
+      top: -120px; right: -120px;
+      width: 550px; height: 550px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(13,156,222,.05), transparent 65%);
+      pointer-events: none;
+    }
+
+    .benefits::after {
+      content: '';
+      position: absolute;
+      bottom: -100px; left: -80px;
+      width: 460px; height: 460px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(164,118,88,.07), transparent 65%);
+      pointer-events: none;
+    }
+
+    .benefits .container { position: relative; z-index: 1; }
+    .benefits .eyebrow { color: rgba(212,168,122,.65); margin-bottom: .8rem; }
+    .benefits .h2 { color: #fff; margin-bottom: 3.8rem; }
+
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.2rem;
+    }
+
+    .bcard {
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.07);
+      border-radius: 22px;
+      padding: 2.6rem 2.1rem;
+      transition: background .3s, border-color .3s, transform .3s;
+    }
+
+    .bcard:hover {
+      background: rgba(164,118,88,.08);
+      border-color: rgba(212,168,122,.3);
+      transform: translateY(-5px);
+    }
+
+    .bicon {
+      width: 54px; height: 54px;
+      border-radius: 15px;
+      background: rgba(164,118,88,.14);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.6rem;
+      transition: background .3s;
+    }
+
+    .bcard:hover .bicon { background: rgba(164,118,88,.22); }
+
+    .bcard h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      color: #fff;
+      margin-bottom: .75rem;
+      line-height: 1.28;
+    }
+
+    .bcard p { font-size: .9rem; color: rgba(255,255,255,.48); line-height: 1.84; }
+
+    /* ── TESTIMONIAL */
+    .testimonial {
+      background: rgba(245,237,227,.87); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .testimonial::before {
+      content: '';
+      position: absolute;
+      top: -80px; right: -10%;
+      width: 600px; height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(164,118,88,.07), transparent 65%);
+      pointer-events: none;
+    }
+
+    .testi-inner {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .testi-inner .eyebrow { text-align: center; }
+
+    .stars {
+      font-size: 1.15rem;
+      color: var(--brown-xlt);
+      letter-spacing: .22em;
+      margin: 1.1rem 0 2.6rem;
+    }
+
+    .open-quote {
+      font-family: 'Playfair Display', serif;
+      font-size: 7rem;
+      line-height: .65;
+      color: var(--brown);
+      opacity: .13;
+      display: block;
+      margin-bottom: 1rem;
+      pointer-events: none;
+    }
+
+    blockquote {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.06rem, 2.3vw, 1.38rem);
+      font-style: italic;
+      color: var(--navy);
+      line-height: 1.88;
+      margin-bottom: 3rem;
+    }
+
+    .author-row {
+      display: inline-flex;
+      align-items: center;
+      gap: 1rem;
+      text-align: left;
+    }
+
+    .ava {
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--brown), var(--olive));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .author-name { font-weight: 600; font-size: .96rem; color: var(--navy); }
+    .author-meta { font-size: .77rem; color: var(--slate); margin-top: .18rem; }
+
+    /* ── FAQ */
+    .faq { background: rgba(255,255,255,.88); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); }
+
+    .faq-list {
+      display: flex;
+      flex-direction: column;
+      gap: .6rem;
+      max-width: 780px;
+      margin: 3rem auto 0;
+    }
+
+    .faq-item {
+      background: rgba(245,237,227,.65);
+      border: 1px solid rgba(164,118,88,.15);
+      border-radius: 14px;
+      overflow: hidden;
+    }
+
+    .faq-item.open { border-color: rgba(164,118,88,.32); }
+
+    .faq-q {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1.25rem 1.6rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-align: left;
+      font-family: 'Inter', sans-serif;
+      font-size: .97rem;
+      font-weight: 600;
+      color: var(--navy);
+    }
+
+    .faq-q svg { flex-shrink: 0; transition: transform .3s; color: var(--brown); }
+    .faq-item.open .faq-q svg { transform: rotate(180deg); }
+
+    .faq-a { max-height: 0; overflow: hidden; transition: max-height .4s ease; }
+
+    .faq-a-inner {
+      padding: 0 1.6rem 1.4rem;
+      font-size: .93rem;
+      color: var(--slate);
+      line-height: 1.8;
+    }
+
+    /* ── FINAL CTA */
+    .final-cta {
+      background: linear-gradient(158deg, rgba(4,16,30,.92) 0%, rgba(12,45,72,.90) 40%, rgba(14,62,98,.88) 72%, rgba(7,25,40,.92) 100%);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .final-cta::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 22% 55%, rgba(164,118,88,.14) 0%, transparent 50%),
+        radial-gradient(ellipse at 82% 25%, rgba(13,156,222,.07) 0%, transparent 45%);
+      pointer-events: none;
+    }
+
+    .final-cta .container { position: relative; z-index: 1; }
+    .final-cta .eyebrow { color: rgba(212,168,122,.65); }
+
+    .cta-h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.2rem, 6vw, 3.8rem);
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.1;
+      margin: .85rem 0 1.2rem;
+    }
+
+    .cta-h2 em { font-style: italic; color: var(--brown-xlt); }
+
+    .cta-sub {
+      font-size: 1.04rem;
+      color: rgba(255,255,255,.52);
+      max-width: 455px;
+      margin: 0 auto 2.8rem;
+      font-weight: 300;
+      line-height: 1.82;
+    }
+
+    .cta-btns {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .urgency {
+      display: inline-flex;
+      align-items: center;
+      gap: .6rem;
+      margin-bottom: 2rem;
+      background: rgba(212,168,122,.1);
+      border: 1px solid rgba(212,168,122,.22);
+      border-radius: 50px;
+      padding: .48rem 1.15rem;
+      font-size: .72rem;
+      color: var(--brown-xlt);
+      letter-spacing: .06em;
+    }
+
+    /* ── FOOTER */
+    footer {
+      background: rgba(2,8,15,.96);
+      padding: 2.4rem 1.5rem;
+      text-align: center;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-bottom: 1.2rem;
+      flex-wrap: wrap;
+    }
+
+    footer a {
+      color: rgba(255,255,255,.38);
+      font-size: .8rem;
+      transition: color .2s;
+    }
+    footer a:hover { color: rgba(255,255,255,.65); }
+
+    .footer-copy {
+      color: rgba(255,255,255,.18);
+      font-size: .72rem;
+      letter-spacing: .05em;
+    }
+
+    /* ── RESPONSIVE */
+    @media (max-width: 860px) {
+      .about-grid    { grid-template-columns: 1fr; gap: 2.8rem; }
+      .benefits-grid { grid-template-columns: 1fr; gap: 1rem; }
+      .includes-grid { grid-template-columns: 1fr; }
+      .hero-stats    { display: none; }
+      .section       { padding: 4.5rem 1.25rem; }
+    }
+
+    @media (max-width: 500px) {
+      .hero-h1 { font-size: 2.5rem; }
+      .hero-btns, .cta-btns { flex-direction: column; align-items: center; }
+      .hero-sub { font-size: .92rem; }
+      .day-body-inner { padding-left: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════ HERO ══════════════════════════ -->
+<section class="hero">
+  <div class="hero-overlay"></div>
+  <div class="hero-fade"></div>
+
+  <nav class="hero-nav">
+    <span class="logo-text">PRO&thinsp;TOUR</span>
+  </nav>
+
+  <div class="hero-body">
+    <div class="hero-pill">
+      <span class="pill-dot"></span>
+      Авторский тур · Дагестан · 2025
+    </div>
+
+    <h1 class="hero-h1">
+      5 дней в Дагестане,<br>которые <em>изменят тебя</em>
+    </h1>
+
+    <p class="hero-sub">
+      Рассвет над Сулакским каньоном, ужин в горном ауле,
+      закат с крепостных стен Дербента. Местный гид.
+      Всё включено. Без туристических клише.
+    </p>
+
+    <div class="hero-btns">
+      <a href="https://wa.me/79857500303" target="_blank" class="btn btn-wa">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+        WhatsApp
+      </a>
+      <a href="https://t.me/Marina_PRO_TOUR" target="_blank" class="btn btn-tg">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+        Telegram
+      </a>
+    </div>
+  </div>
+
+  <div class="hero-stats">
+    <div class="hstat">
+      <span class="hstat-num">7</span>
+      <span class="hstat-label">лет в туризме</span>
+    </div>
+    <div class="hstat-sep"></div>
+    <div class="hstat">
+      <span class="hstat-num">200+</span>
+      <span class="hstat-label">довольных гостей</span>
+    </div>
+    <div class="hstat-sep"></div>
+    <div class="hstat">
+      <span class="hstat-num">22+</span>
+      <span class="hstat-label">точки маршрута</span>
+    </div>
+    <div class="hstat-sep"></div>
+    <div class="hstat">
+      <span class="hstat-num">12</span>
+      <span class="hstat-label">мест в группе</span>
+    </div>
+  </div>
+
+  <div class="hero-scroll-cue"></div>
+</section>
+
+
+<!-- ══════════════════ ABOUT ═════════════════════════ -->
+<section class="section about">
+  <div class="container">
+    <div class="about-grid">
+
+      <div class="about-card">
+        <div class="ac-inner">
+          <svg width="44" height="30" viewBox="0 0 44 30" fill="none" aria-hidden="true"
+               style="margin-bottom:1.5rem; opacity:.25;">
+            <path d="M2,26 L14,6 L22,16 L26,8 L42,26 Z"
+                  stroke="white" stroke-width="1.5" stroke-linejoin="round"/>
+            <path d="M26,8 L30,8" stroke="white" stroke-width="1" opacity=".5"/>
+          </svg>
+          <div class="ac-tag">Авторский маршрут · 2025</div>
+          <div class="ac-title">Дагестан<br>на Максимум</div>
+          <div class="ac-sub">5 дней полного погружения в живой Кавказ</div>
+          <div class="ac-rule"></div>
+          <div class="ac-stats">
+            <div>
+              <div class="ac-stat-n">5</div>
+              <div class="ac-stat-l">дней маршрута</div>
+            </div>
+            <div>
+              <div class="ac-stat-n">22+</div>
+              <div class="ac-stat-l">точек маршрута</div>
+            </div>
+            <div>
+              <div class="ac-stat-n">12</div>
+              <div class="ac-stat-l">мест в группе</div>
+            </div>
+          </div>
+          <div class="ac-badge">
+            <span class="green-dot"></span>
+            Набор в следующую группу открыт
+          </div>
+        </div>
+      </div>
+
+      <div class="about-text">
+        <div class="eyebrow">Об организаторе</div>
+        <h2 class="h2">Я знаю каждую тропу.<br>Я проверила всё лично.</h2>
+        <p style="margin-top:1.5rem">Меня зовут <strong>Марина</strong>. Уже 7 лет я создаю авторские туры в Дагестан — для тех, кто хочет увидеть этот край таким, каким его не покажет ни один путеводитель и ни одно туристическое агентство.</p>
+        <p>Мои маршруты — это <strong>живой Кавказ без фальши</strong>: кофе над обрывом Сулакского каньона на рассвете, домашние чуду у хозяйки в горном ауле, верховая прогулка по альпийским лугам Матласа, закат прямо с крепостных стен Дербента.</p>
+        <p>Я берусь за всё: трансфер, проживание, питание, гиды, билеты, страховка. <strong>Тебе нужен только авиабилет до Махачкалы — остальное моя работа.</strong></p>
+
+        <div class="tags-row">
+          <span class="tag">Сулакский каньон</span>
+          <span class="tag">Гамсутль</span>
+          <span class="tag">Карадахская теснина</span>
+          <span class="tag">Плато Матлас</span>
+          <span class="tag">Дербент</span>
+          <span class="tag">Верховая езда</span>
+          <span class="tag">САП-прогулка</span>
+          <span class="tag">Горные аулы</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════ ПРОГРАММА ════════════════════ -->
+<section class="section program">
+  <div class="container">
+    <div class="eyebrow">Маршрут</div>
+    <h2 class="h2">5 дней — 22+ локации.<br>Каждый час — впечатление.</h2>
+
+    <div class="day-list" id="dayList">
+
+      <div class="day-item open">
+        <button class="day-header">
+          <span class="day-num">01</span>
+          <div class="day-label">
+            <h3>Сулакский каньон</h3>
+            <p>Аэропорт · Бархан Сарыкум · Катер по каньону · Чиркейская ГЭС</p>
+          </div>
+          <svg class="day-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <div class="day-body">
+          <div class="day-body-inner">
+            <ul class="day-points">
+              <li>Встреча в аэропорту Махачкалы в 9:00 — трансфер сразу на маршрут</li>
+              <li>Бархан Сарыкум — самый высокий в Европе (260 м), природное чудо посреди Кавказа</li>
+              <li>Прогулка на катере по Сулакскому каньону — глубже Гранд-Каньона: «плачущие» водопады, пещера Нохъо, качающийся мост</li>
+              <li>Чиркейская ГЭС — крупнейшая в России арочная плотина</li>
+              <li>Гимринский тоннель — самый длинный в России (4 303 м), прорытый сквозь хребет</li>
+              <li>Гимринская башня и Ирганайское водохранилище</li>
+            </ul>
+            <div class="day-tip">Рейс подбирать с прибытием до 9:00 — встречаю прямо у выхода из аэропорта.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="day-item">
+        <button class="day-header">
+          <span class="day-num">02</span>
+          <div class="day-label">
+            <h3>Гамсутль — город-призрак</h3>
+            <p>Восхождение на 1 500 м · Чохские террасы · Гуниб · Салтинский водопад</p>
+          </div>
+          <svg class="day-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <div class="day-body">
+          <div class="day-body-inner">
+            <ul class="day-points">
+              <li>Восхождение на Гамсутль (1 500 м) — брошенный аул-призрак, висящий над облаками. ~40 мин пешком</li>
+              <li>Чохские террасы — живописные сельскохозяйственные ступени, которым сотни лет</li>
+              <li>Гуниб — музей Кавказской войны и парк «Белые журавли»</li>
+              <li>Башня Андалал на Гунибской ГЭС — панорама на ущелье</li>
+              <li>Салтинский подземный водопад — единственный в России водопад, уходящий под землю</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="day-item">
+        <button class="day-header">
+          <span class="day-num">03</span>
+          <div class="day-label">
+            <h3>Водопады и плато Матлас</h3>
+            <p>Тобот 70 м · Зип-лайн · Верховая езда · Урбеч · САПы</p>
+          </div>
+          <svg class="day-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <div class="day-body">
+          <div class="day-body-inner">
+            <ul class="day-points">
+              <li>Водопад Тобот (70 м) — один из красивейших на Кавказе, водопады Итлятляр и Ханский</li>
+              <li>Роуп-джампинг с Тобота — прыжок с верёвкой над пропастью (по желанию, оплата отдельно)</li>
+              <li>Зип-лайн на плато Матлас — полёт над ущельем</li>
+              <li>Прогулка на лошадях по альпийским лугам, Каменные Чаши</li>
+              <li>Мельница урбеча в Хунзахе — дегустация и знакомство с производством</li>
+              <li>Прогулка на САПах по Ирганайскому водохранилищу</li>
+            </ul>
+            <div class="day-tip">Самый насыщенный день — активности идут одна за другой.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="day-item">
+        <button class="day-header">
+          <span class="day-num">04</span>
+          <div class="day-label">
+            <h3>Гоор и Карадахская теснина</h3>
+            <p>Теснина 170 м · Языки Тролля · Башни XVII в. · Датунский храм</p>
+          </div>
+          <svg class="day-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <div class="day-body">
+          <div class="day-body-inner">
+            <ul class="day-points">
+              <li>Гоцатлинское водохранилище — утренняя панорама гор и воды</li>
+              <li>Карадахская теснина — ущелье высотой 170 м при ширине 2–5 м, внутри всегда прохладно и полумрак</li>
+              <li>Заброшенное село Гоор с боевыми башнями XVII века</li>
+              <li>«Языки Тролля» — дагестанская версия норвежской достопримечательности с обрывом над пропастью</li>
+              <li>Датунский христианский храм X–XI вв. — один из древнейших на всём Кавказе</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="day-item">
+        <button class="day-header">
+          <span class="day-num">05</span>
+          <div class="day-label">
+            <h3>Дербент — древнейший город России</h3>
+            <p>Нарын-Кала · Джума-мечеть · Старый город · Экраноплан Лунь</p>
+          </div>
+          <svg class="day-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <div class="day-body">
+          <div class="day-body-inner">
+            <ul class="day-points">
+              <li>Крепость Нарын-Кала — объект ЮНЕСКО, 2 000 лет истории над Каспийским морем</li>
+              <li>Джума-мечеть (VIII в.) — одна из старейших действующих мечетей России</li>
+              <li>Старый город — магалы: лабиринты средневековых улочек и дворов</li>
+              <li>«Улица счастливых людей» — атмосферные граффити, кофейни, пассаж</li>
+              <li>Экраноплан «Лунь» («Каспийский монстр») — засекреченный советский суперсамолёт на берегу Каспия</li>
+            </ul>
+            <div class="day-tip">Вылет не ранее 21:00 — успеешь насладиться городом без спешки.</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════ ЧТО ВКЛЮЧЕНО ════════════════ -->
+<section class="section includes">
+  <div class="container">
+    <div class="eyebrow">Условия</div>
+    <h2 class="h2">Одна цена —<br>ноль сюрпризов</h2>
+
+    <div class="includes-grid">
+
+      <div class="inc-card yes">
+        <div class="inc-title">Включено в стоимость</div>
+        <ul class="inc-list">
+          <li>
+            <span class="inc-icon yes"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3L10 1" stroke="#52c28a" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Трансфер из аэропорта и по всему маршруту (минивэны, микроавтобусы, спецтехника)
+          </li>
+          <li>
+            <span class="inc-icon yes"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3L10 1" stroke="#52c28a" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Проживание в гестхаусах: свежий ремонт, душ/ванна в номере, горячая вода, Wi-Fi
+          </li>
+          <li>
+            <span class="inc-icon yes"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3L10 1" stroke="#52c28a" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Питание 3 раза в день: чуду, хинкал с мясом, курзе, абрикосовая каша, горский кофе, урбеч
+          </li>
+          <li>
+            <span class="inc-icon yes"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3L10 1" stroke="#52c28a" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Все входные билеты и экскурсионные сборы на объектах маршрута
+          </li>
+          <li>
+            <span class="inc-icon yes"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3L10 1" stroke="#52c28a" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Прогулка на катере по Сулакскому каньону
+          </li>
+          <li>
+            <span class="inc-icon yes"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3L10 1" stroke="#52c28a" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Верховая езда, зип-лайн, прогулка на САПах
+          </li>
+          <li>
+            <span class="inc-icon yes"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3L10 1" stroke="#52c28a" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Услуги организатора и местных гидов на всех точках
+          </li>
+          <li>
+            <span class="inc-icon yes"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3L10 1" stroke="#52c28a" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            Страховка путешественника на весь срок тура
+          </li>
+        </ul>
+      </div>
+
+      <div class="inc-card no">
+        <div class="inc-title">Не включено</div>
+        <ul class="inc-list">
+          <li>
+            <span class="inc-icon no"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 2l6 6M8 2l-6 6" stroke="#999" stroke-width="1.6" stroke-linecap="round"/></svg></span>
+            Авиабилеты до Махачкалы и обратно
+          </li>
+          <li>
+            <span class="inc-icon no"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 2l6 6M8 2l-6 6" stroke="#999" stroke-width="1.6" stroke-linecap="round"/></svg></span>
+            Роуп-джампинг с водопада Тобот (оплата на месте, по желанию)
+          </li>
+          <li>
+            <span class="inc-icon no"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 2l6 6M8 2l-6 6" stroke="#999" stroke-width="1.6" stroke-linecap="round"/></svg></span>
+            Доплата за одноместное размещение — 1 000 ₽/ночь
+          </li>
+          <li>
+            <span class="inc-icon no"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 2l6 6M8 2l-6 6" stroke="#999" stroke-width="1.6" stroke-linecap="round"/></svg></span>
+            Сувениры и личные расходы
+          </li>
+          <li>
+            <span class="inc-icon no"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 2l6 6M8 2l-6 6" stroke="#999" stroke-width="1.6" stroke-linecap="round"/></svg></span>
+            Завтрак в день прилёта и ужин в день вылета
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════ BENEFITS ═════════════════════ -->
+<section class="section benefits">
+  <div class="container">
+    <div class="eyebrow">Почему PRO TOUR</div>
+    <h2 class="h2">Три причины выбрать<br>именно этот тур</h2>
+
+    <div class="benefits-grid">
+
+      <div class="bcard">
+        <div class="bicon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" stroke="#d4a87a" stroke-width="1.5" stroke-linejoin="round"/>
+            <path d="M9 22V12h6v10" stroke="#d4a87a" stroke-width="1.5" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h3>Каждый час — впечатление, а не переезд</h3>
+        <p>22+ локации за 5 дней: каньон глубже Гранд-Каньона, подземный водопад, аул-призрак на высоте 1 500 м, Каспийский монстр. Маршрут выверен до детали — без туристического балласта и пустого времени в автобусе.</p>
+      </div>
+
+      <div class="bcard">
+        <div class="bicon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <rect x="2" y="7" width="20" height="14" rx="2" stroke="#d4a87a" stroke-width="1.5"/>
+            <path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2" stroke="#d4a87a" stroke-width="1.5" stroke-linejoin="round"/>
+            <path d="M12 12v4M10 14h4" stroke="#d4a87a" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3>Всё включено — одна цена, ноль сюрпризов</h3>
+        <p>Трансфер, проживание, 3-разовое питание национальной кухней, все билеты, страховка, катер, лошади, зип-лайн и САП — в одной сумме. Тебе нужен только авиабилет до Махачкалы.</p>
+      </div>
+
+      <div class="bcard">
+        <div class="bicon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#d4a87a" stroke-width="1.5" stroke-linejoin="round"/>
+            <path d="M9 12l2 2 4-4" stroke="#d4a87a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h3>Безопасно и подходит любому возрасту</h3>
+        <p>Дагестан — часть России, везде русский язык. Кавказское гостеприимство — в каждом доме. Тур подходит для любой физподготовки: активности регулируются по желанию. Я лично отвечаю за каждого гостя группы.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════ ОТЗЫВ ════════════════════════ -->
+<section class="section testimonial">
+  <div class="container">
+    <div class="testi-inner">
+      <div class="eyebrow">Отзыв участника</div>
+      <div class="stars">★★★★★</div>
+      <span class="open-quote">&ldquo;</span>
+
+      <blockquote>
+        Ехала просто сменить обстановку — уехала с ощущением,
+        что побывала на другой планете. Рассвет над Сулакским каньоном в тумане,
+        ужин у хозяйки в горном ауле, прогулка на лошадях по альпийским лугам,
+        закат прямо с крепостных стен Дербента.
+        Марина сделала так, что каждый момент был живым и настоящим.
+        Это не тур — это опыт, который остаётся с тобой навсегда.
+      </blockquote>
+
+      <div class="author-row">
+        <div class="ava">А</div>
+        <div>
+          <div class="author-name">Анна Соколова</div>
+          <div class="author-meta">Москва · «Дагестан на максимум» · октябрь 2024</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════ FAQ ═══════════════════════════ -->
+<section class="section faq">
+  <div class="container">
+    <div class="eyebrow" style="text-align:center">Вопросы и ответы</div>
+    <h2 class="h2" style="text-align:center">Отвечаю на частые вопросы</h2>
+
+    <div class="faq-list" id="faqList">
+
+      <div class="faq-item">
+        <button class="faq-q">
+          Какой рейс выбрать?
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4 6.5l5 5 5-5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="faq-a">
+          <div class="faq-a-inner">Прилёт в Махачкалу <strong>до 9:00 первого дня</strong> — встречаю прямо у выхода из аэропорта. Вылет <strong>не ранее 21:00 последнего дня</strong> — успеешь насладиться Дербентом без спешки. Если прилетаешь накануне, помогу с трансфером и жильём за дополнительную плату.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">
+          Нужна ли физическая подготовка?
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4 6.5l5 5 5-5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="faq-a">
+          <div class="faq-a-inner">Нет. Тур подходит для людей любого возраста. Единственная нагрузка — восхождение на Гамсутль (2-й день), подъём пешком около 40 минут. Все активности — лошади, зип-лайн, роуп-джампинг — по желанию и не обязательны.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">
+          Это безопасно? Как дела со связью в горах?
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4 6.5l5 5 5-5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="faq-a">
+          <div class="faq-a-inner">Дагестан — часть России, 99% населения говорят по-русски. Кавказское гостеприимство — не туристический миф, здесь к гостям относятся с искренней теплотой. В горах интернет бывает нестабилен — берите наличные на личные расходы и опциональные активности. В гестхаусах Wi-Fi везде есть.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">
+          Что взять с собой?
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4 6.5l5 5 5-5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="faq-a">
+          <div class="faq-a-inner">Удобная обувь для ходьбы (трекинговые кроссовки или ботинки), лёгкий дождевик, многослойная одежда (в горах прохладно даже летом), солнцезащитный крем, личная аптечка. Для посещения мечетей — платок для женщин и одежда ниже колена.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">
+          Как узнать стоимость и забронировать место?
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4 6.5l5 5 5-5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="faq-a">
+          <div class="faq-a-inner">Напиши в <strong>WhatsApp или Telegram @Marina_PRO_TOUR</strong> — расскажу о ближайших датах, стоимости и отвечу на все вопросы. Группы небольшие (до 12 человек), места заканчиваются быстро, лучше не откладывать.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════ ФИНАЛЬНЫЙ CTA ════════════════ -->
+<section class="section final-cta">
+  <div class="container">
+    <div class="eyebrow">Следующая группа</div>
+    <h2 class="cta-h2">
+      Готов увидеть<br>настоящий <em>Кавказ?</em>
+    </h2>
+    <div class="urgency">
+      <span class="pill-dot"></span>
+      Осталось несколько мест — группа формируется прямо сейчас
+    </div>
+    <p class="cta-sub">
+      Напиши прямо сейчас — расскажу о ближайших датах,
+      стоимости и отвечу на любые вопросы.
+    </p>
+    <div class="cta-btns">
+      <a href="https://wa.me/79857500303" target="_blank" class="btn btn-wa">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+        WhatsApp
+      </a>
+      <a href="https://t.me/Marina_PRO_TOUR" target="_blank" class="btn btn-tg">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+        Telegram
+      </a>
+      <a href="tel:+79857500303" class="btn btn-ghost">+7 (985) 750-03-03</a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════ FOOTER ════════════════════════ -->
+<footer>
+  <div class="footer-links">
+    <a href="https://wa.me/79857500303" target="_blank">WhatsApp</a>
+    <a href="https://t.me/Marina_PRO_TOUR" target="_blank">Telegram @Marina_PRO_TOUR</a>
+    <a href="tel:+79857500303">+7 (985) 750-03-03</a>
+    <a href="https://teletype.in/@pro_tour/Max5" target="_blank">Полная программа →</a>
+  </div>
+  <p class="footer-copy">© 2025 PRO TOUR · Авторские туры в Дагестан</p>
+</footer>
+
+
+<script>
+(function () {
+  function accordion(listId, itemSel, bodysel) {
+    var list = document.getElementById(listId);
+    if (!list) return;
+    var items = list.querySelectorAll(itemSel);
+    items.forEach(function (item) {
+      var body = item.querySelector(bodysel);
+      if (item.classList.contains('open')) {
+        body.style.maxHeight = body.scrollHeight + 'px';
+      }
+      var btn = item.querySelector('button');
+      btn.addEventListener('click', function () {
+        var isOpen = item.classList.contains('open');
+        items.forEach(function (i) {
+          i.classList.remove('open');
+          i.querySelector(bodysel).style.maxHeight = '0';
+        });
+        if (!isOpen) {
+          item.classList.add('open');
+          body.style.maxHeight = body.scrollHeight + 'px';
+        }
+      });
+    });
+  }
+
+  accordion('dayList', '.day-item', '.day-body');
+  accordion('faqList', '.faq-item', '.faq-a');
+})();
+</script>
+
+</body>
+</html>
